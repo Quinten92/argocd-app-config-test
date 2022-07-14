@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: myapp-argo-application
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Quinten92/argocd-app-config-test.git
+    targetRevision: HEAD
+    path: dev # path to track changing
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: myapp
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      seflHeal: true
+      prune: true
